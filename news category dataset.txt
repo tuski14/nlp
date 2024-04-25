@@ -1,0 +1,42 @@
+#news data 
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize
+from langdetect import detect
+import pandas as pd
+
+# Download NLTK resources
+nltk.download('punkt')
+
+# Load the News category dataset
+df = pd.read_json('News_Category_Dataset_v2.json', lines=True)
+
+# Sample headlines for demonstration
+headlines = df['headline'].sample(5, random_state=42)
+
+# Perform language detection, word count, sentence count, and word-level tokenization for each headline
+for i, headline in enumerate(headlines):
+    print(f"Headline {i + 1}: {headline}")
+    
+    # Language detection
+    try:
+        language = detect(headline)
+        print(f"Language: {language}")
+    except:
+        print("Language detection failed.")
+    
+    # Word count
+    words = word_tokenize(headline)
+    word_count = len(words)
+    print(f"Word Count: {word_count}")
+    
+    # Sentence count
+    sentences = sent_tokenize(headline)
+    sentence_count = len(sentences)
+    print(f"Sentence Count: {sentence_count}")
+    
+    # Word-level tokenization
+    print("Word-level Tokenization:")
+    for j, word in enumerate(words):
+        print(f"   {j + 1}. {word}")
+    
+    print("\n")
